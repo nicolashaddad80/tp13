@@ -22,6 +22,7 @@ public class Tp13JPanelController extends JPanel {
         this.myModel = a_myModel;
         this.userLabel = new JLabel("User "+(Tp13JPanelController.userNumber++)+":");
         this.userMessageField = new JTextField();
+        this.userMessageField.setSize(600,20);
         this.okButton = new JButton("ok");
         okButton.addActionListener(this::updateMode);
 

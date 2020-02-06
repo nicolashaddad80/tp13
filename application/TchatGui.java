@@ -13,7 +13,7 @@ import java.awt.event.WindowEvent;
 
 public class TchatGui {
 
-    private JFrame frame = new JFrame("CounterGuiPresentation");
+    private JFrame frame = new JFrame("Tchat Gui Application");
     /*Create instance of Model*/
     private Salon myModel;
     private Tp13JPanelView myTchatView;
@@ -23,17 +23,18 @@ public class TchatGui {
         this.myModel = a_myModel;
         this.myTchatView = new Tp13JPanelView(myModel);
         this.myTchatController = new Tp13JPanelController(myModel);
-        JButton myExitButton = new JButton("Quitter");
+        JButton myExitButton = new JButton("Fermer");
 
         Container content = this.frame.getContentPane();
         content.setLayout(new FlowLayout());
+        /*Adding Exit Button*/
+        content.add(myExitButton);
         /* Adding Vue Panel Part */
         content.add(this.myTchatView);
         /* Adding controller Panel Part */
         content.add(myTchatController);
         myExitButton.addActionListener(e -> myExit());
-        /*Adding Exit Button*/
-        content.add(myExitButton);
+
     }
 
     public void start() {
@@ -42,7 +43,7 @@ public class TchatGui {
                 myExit();
             }
         });
-        this.frame.setSize(500, 100);
+        this.frame.setSize(800, 700);
         this.frame.setVisible(true);
     }
 

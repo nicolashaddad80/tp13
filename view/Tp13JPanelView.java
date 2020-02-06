@@ -35,6 +35,7 @@ public class Tp13JPanelView extends JPanel implements OptimizedClass {
         this.myModelObserver = this::updateMyModelValue;
         this.myModel.registerObserver(myModelObserver);
         this.displaySalon  = new JTextArea();
+        this.displaySalon.setSize(700,500);
         this.add(this.displaySalon);
 
         this.LoadMyModel();
