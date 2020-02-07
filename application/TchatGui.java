@@ -1,10 +1,7 @@
 package fr.cnam.tp13.application;
 
-import fr.cnam.cour11.controllers.PanelController;
-
 import fr.cnam.tp13.controllers.Tp13JPanelController;
 import fr.cnam.tp13.model.ObservableSalon;
-import fr.cnam.tp13.model.Salon;
 import fr.cnam.tp13.view.Tp13JPanelView;
 
 import javax.swing.*;

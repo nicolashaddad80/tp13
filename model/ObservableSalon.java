@@ -1,32 +1,27 @@
 package fr.cnam.tp13.model;
 
 import fr.cnam.cour11.DebugOnOFF;
-
 import fr.cnam.tp12.mypatterns.MyObservable;
 import fr.cnam.tp12.mypatterns.MyObserver;
+
 import java.util.ArrayList;
+import java.util.TreeSet;
 
-public class ObservableSalon  extends SalonImpl implements MyObservable{
+public class ObservableSalon extends TreeSet<String> implements MyObservable {
 
 
-
-    private ArrayList<MyObserver> observers;
-
-    public ObservableSalon(Salon mySalon) {
-
-        this.observers = new ArrayList<>();
-    }
+    private ArrayList<MyObserver> observers = new ArrayList<>();
 
     @Override
-    public void addMessage(String a_message) {
+    public boolean add(String a_message) {
 
-        this.add(a_message);
-
+        boolean success=super.add(a_message);
         this.notifyObservers();
+        return success;
     }
 
     @Override
-    public void addObserver(MyObserver  a_My_observer) {
+    public void addObserver(MyObserver a_My_observer) {
         this.observers.add(a_My_observer);
         if (DebugOnOFF.DEBUG_ON)
             System.out.println("An Observer just registered, now total Observers= " + this.countObservers());
@@ -51,7 +46,6 @@ public class ObservableSalon  extends SalonImpl implements MyObservable{
     public int countObservers() {
         return this.observers.size();
     }
-
 
 
 }
