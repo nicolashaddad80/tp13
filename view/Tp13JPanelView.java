@@ -1,12 +1,13 @@
 package fr.cnam.tp13.view;
 
-import fr.cnam.cour11.model.spec.Counter;
-import fr.cnam.cour11.mydesignpatterns.observer.MyObserver;
-import fr.cnam.cour11.mydesignpatterns.observer.OptimizedClass;
-import fr.cnam.tp13.model.Salon;
+
+
+import fr.cnam.tp12.mypatterns.MyObserver;
+import fr.cnam.tp12.mypatterns.OptimizedClass;
+import fr.cnam.tp13.model.ObservableSalon;
 
 import javax.swing.*;
-import java.util.Iterator;
+
 
 public class Tp13JPanelView extends JPanel implements OptimizedClass {
 
@@ -17,7 +18,7 @@ public class Tp13JPanelView extends JPanel implements OptimizedClass {
     /**
      * My Model is a simple Observable counter that I will Observe by registering me to him
      */
-    private Salon myModel;
+    private ObservableSalon myModel;
     private MyObserver myModelObserver;
 
     /**
@@ -30,29 +31,36 @@ public class Tp13JPanelView extends JPanel implements OptimizedClass {
      *
      * @param a_myModel: A simple counter as a Model for me.
      */
-    public Tp13JPanelView(Salon a_myModel) {
+    public Tp13JPanelView(ObservableSalon a_myModel) {
         this.myModel = a_myModel;
         this.myModelObserver = this::updateMyModelValue;
-        this.myModel.registerObserver(myModelObserver);
+        this.myModel.addObserver(myModelObserver);
+
         this.displaySalon  = new JTextArea();
-        this.displaySalon.setSize(700,500);
-        this.add(this.displaySalon);
+        this.displaySalon.setLineWrap(true);
+        this.displaySalon.setWrapStyleWord(true);
+        this.displaySalon.setEditable(false);
+        this.displaySalon.setColumns(45);
+        this.displaySalon.setRows(40);
+        this.displaySalon.setAutoscrolls(true);
+
+        JScrollPane salonScrollPane = new JScrollPane(this.displaySalon);
+
+        salonScrollPane.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
+
+        this.add(salonScrollPane);
 
         this.LoadMyModel();
     }
 
-     private void LoadMyModel() {
-        //TODO change Model to be able to do for each on the model as specified
+    private void LoadMyModel() {
 
-        while(this.myModel.getIterator().hasNext()) this.displaySalon.append((String)this.myModel.getIterator().next());
+        for(String message: this.myModel) this.displaySalon.append(message);
     }
 
     private void updateMyModelValue() {
-        //TODO change Model to be able to do for each on the model as specified
-        Iterator<String>  myModelIterator=this.myModel.getIterator();
-        String lastMessage="";
-        while(this.myModel.getIterator().hasNext()) lastMessage = myModelIterator.next();
-        this.displaySalon.append(lastMessage);
+        if(this.myModel.size() <=0) System.out.println("EROOR: Empty set");
+        this.displaySalon.append(this.myModel.last());
     }
 
     /**
@@ -63,7 +71,7 @@ public class Tp13JPanelView extends JPanel implements OptimizedClass {
 
     @Override
     public void destroy() {
-        this.myModel.unregisterObserver(this.myModelObserver);
+        this.myModel.deleteObserver(this.myModelObserver);
     }
 
 }

@@ -3,6 +3,7 @@ package fr.cnam.tp13.application;
 import fr.cnam.cour11.controllers.PanelController;
 
 import fr.cnam.tp13.controllers.Tp13JPanelController;
+import fr.cnam.tp13.model.ObservableSalon;
 import fr.cnam.tp13.model.Salon;
 import fr.cnam.tp13.view.Tp13JPanelView;
 
@@ -15,25 +16,29 @@ public class TchatGui {
 
     private JFrame frame = new JFrame("Tchat Gui Application");
     /*Create instance of Model*/
-    private Salon myModel;
+    private ObservableSalon myModel;
     private Tp13JPanelView myTchatView;
     private Tp13JPanelController myTchatController;
-
-    public TchatGui(Salon a_myModel) {
+    private JButton myExitButton;
+    public TchatGui(ObservableSalon a_myModel) {
         this.myModel = a_myModel;
         this.myTchatView = new Tp13JPanelView(myModel);
+        this.myTchatView.setSize(500,300);
         this.myTchatController = new Tp13JPanelController(myModel);
-        JButton myExitButton = new JButton("Fermer");
+        this.myTchatController.setSize(500,50);
+        this.myExitButton = new JButton("Fermer");
+        myExitButton.addActionListener(e -> myExit());
 
         Container content = this.frame.getContentPane();
-        content.setLayout(new FlowLayout());
+        //content.setLayout(new GridLayout());
         /*Adding Exit Button*/
-        content.add(myExitButton);
+        content.add(this.myExitButton,BorderLayout.NORTH);
         /* Adding Vue Panel Part */
-        content.add(this.myTchatView);
+
+
+        content.add(this.myTchatView,BorderLayout.CENTER);
         /* Adding controller Panel Part */
-        content.add(myTchatController);
-        myExitButton.addActionListener(e -> myExit());
+        content.add(myTchatController,BorderLayout.SOUTH);
 
     }
 
@@ -43,7 +48,7 @@ public class TchatGui {
                 myExit();
             }
         });
-        this.frame.setSize(800, 700);
+        this.frame.setSize(500, 400);
         this.frame.setVisible(true);
     }
 
