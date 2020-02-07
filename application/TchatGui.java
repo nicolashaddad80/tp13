@@ -17,25 +17,28 @@ public class TchatGui {
     private Tp13JPanelView myTchatView;
     private Tp13JPanelController myTchatController;
     private JButton myExitButton;
+
     public TchatGui(ObservableSalon a_myModel) {
         this.myModel = a_myModel;
         this.myTchatView = new Tp13JPanelView(myModel);
-        this.myTchatView.setSize(500,300);
+        this.myTchatView.setSize(500, 300);
         this.myTchatController = new Tp13JPanelController(myModel);
-        this.myTchatController.setSize(500,50);
+        this.myTchatController.setSize(500, 50);
         this.myExitButton = new JButton("Fermer");
         myExitButton.addActionListener(e -> myExit());
 
         Container content = this.frame.getContentPane();
-        //content.setLayout(new GridLayout());
+
         /*Adding Exit Button*/
-        content.add(this.myExitButton,BorderLayout.NORTH);
+        content.add(this.myExitButton, BorderLayout.NORTH);
         /* Adding Vue Panel Part */
+        JScrollPane tchat = new JScrollPane(this.myTchatView);
+        tchat.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+        tchat.setAutoscrolls(true);
 
-
-        content.add(this.myTchatView,BorderLayout.CENTER);
+        content.add(tchat, BorderLayout.CENTER);
         /* Adding controller Panel Part */
-        content.add(myTchatController,BorderLayout.SOUTH);
+        content.add(myTchatController, BorderLayout.SOUTH);
 
     }
 

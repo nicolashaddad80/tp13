@@ -1,8 +1,6 @@
 package fr.cnam.tp13.view;
 
 
-
-import fr.cnam.tp12.mypatterns.MyObserver;
 import fr.cnam.tp12.mypatterns.OptimizedClass;
 import fr.cnam.tp13.model.ObservableSalon;
 
@@ -19,7 +17,7 @@ public class Tp13JPanelView extends JPanel implements OptimizedClass {
      * My Model is a simple Observable counter that I will Observe by registering me to him
      */
     private ObservableSalon myModel;
-    private MyObserver myModelObserver;
+    //private MyObserver myModelObserver;
 
     /**
      * My Model is a simple Counter use simple swing label to show it in the screen
@@ -29,14 +27,14 @@ public class Tp13JPanelView extends JPanel implements OptimizedClass {
     /**
      * Constructor
      *
-     * @param a_myModel: A simple counter as a Model for me.
+     * @param a_myModel: A Ordered Set
      */
     public Tp13JPanelView(ObservableSalon a_myModel) {
         this.myModel = a_myModel;
-        this.myModelObserver = this::updateMyModelValue;
-        this.myModel.addObserver(myModelObserver);
+        //this.myModelObserver = this::update;
+        this.myModel.addObserver(this);
 
-        this.displaySalon  = new JTextArea();
+        this.displaySalon = new JTextArea();
         this.displaySalon.setLineWrap(true);
         this.displaySalon.setWrapStyleWord(true);
         this.displaySalon.setEditable(false);
@@ -44,22 +42,21 @@ public class Tp13JPanelView extends JPanel implements OptimizedClass {
         this.displaySalon.setRows(40);
         this.displaySalon.setAutoscrolls(true);
 
-        JScrollPane salonScrollPane = new JScrollPane(this.displaySalon);
+        //ToClean  JScrollPane salonScrollPane = new JScrollPane(this.displaySalon);
+        // ToClean  salonScrollPane.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
 
-        salonScrollPane.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
-
-        this.add(salonScrollPane);
+        this.add(this.displaySalon);
 
         this.LoadMyModel();
     }
 
     private void LoadMyModel() {
 
-        for(String message: this.myModel) this.displaySalon.append(message);
+        for (String message : this.myModel) this.displaySalon.append(message);
     }
 
-    private void updateMyModelValue() {
-        if(this.myModel.size() <=0) System.out.println("EROOR: Empty set");
+    @Override
+    public void update(Object observable) {
         this.displaySalon.append(this.myModel.last());
     }
 
@@ -71,7 +68,7 @@ public class Tp13JPanelView extends JPanel implements OptimizedClass {
 
     @Override
     public void destroy() {
-        this.myModel.deleteObserver(this.myModelObserver);
+        this.myModel.deleteObserver(this);
     }
 
 }

@@ -14,7 +14,6 @@ public class Tp13JPanelController extends JPanel {
     public static int userNumber = 1;
 
     private ObservableSalon myModel;
-
     private JLabel userLabel;
     private JTextField userMessageField;
     private JButton okButton;
@@ -24,7 +23,7 @@ public class Tp13JPanelController extends JPanel {
         this.myModel = a_myModel;
         this.userLabel = new JLabel("User " + (Tp13JPanelController.userNumber++) + ":");
         this.userMessageField = new JTextField(null);
-       // this.userMessageField.setText(null);
+        // this.userMessageField.setText(null);
         this.userMessageField.setColumns(35);
         this.okButton = new JButton("ok");
         okButton.addActionListener(this::updateMode);
@@ -47,7 +46,7 @@ public class Tp13JPanelController extends JPanel {
         Timestamp ts = new Timestamp(time);
         if (!userMessageField.getText().isEmpty()) {
             this.myModel.add(ts + "  " + this.userLabel.getText() + this.userMessageField.getText() + DebugOnOFF.newline);
-            this.userMessageField.  setText("");
+            this.userMessageField.setText("");
         }
     }
 }

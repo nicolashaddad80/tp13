@@ -15,7 +15,7 @@ public class ObservableSalon extends TreeSet<String> implements MyObservable {
     @Override
     public boolean add(String a_message) {
 
-        boolean success=super.add(a_message);
+        boolean success = super.add(a_message);
         this.notifyObservers();
         return success;
     }
@@ -38,7 +38,7 @@ public class ObservableSalon extends TreeSet<String> implements MyObservable {
     public void notifyObservers() {
         if (DebugOnOFF.DEBUG_ON) System.out.println("notifying " + this.countObservers() + ": All Observers");
         for (MyObserver obs : this.observers) {
-            obs.update();
+            obs.update(this);
         }
     }
 
